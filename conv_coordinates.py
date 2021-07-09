@@ -47,8 +47,12 @@ for x, deg_x, y, deg_y, node_value in zip(x_values, x_deg_values, y_values, y_de
     j = node_index[x] + dimension_index[deg_x]
     i = node_index[y] + dimension_index[deg_y]
     mat[j, i] = node_value
+    mat[j, i] = node_value
     print("%d %d %.2g" % (j, i, node_value))
     ax.text(i, j, "%.2g" % node_value, va='center', ha='center')
+    ax.text(j, i, "%.2g" % node_value, va='center', ha='center')
+
+
 
 cax = ax.matshow(mat, cmap=plt.cm.Blues, vmin=0, vmax=node_values.max())
 fig.colorbar(cax)
