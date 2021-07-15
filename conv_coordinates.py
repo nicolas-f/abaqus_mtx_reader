@@ -26,19 +26,19 @@ for x_id, j in zip(node_ids, range(len(node_ids))):
     if x_id < 0:
         j = j * 2
     else:
-        j = negative_nodes * 2 + (j - negative_nodes) * 3
+        j = negative_nodes * 2 + (j - negative_nodes) * 2
     node_index[x_id] = j
 
-final_matrix_length = negative_nodes * 2 + positive_nodes * 3
+final_matrix_length = negative_nodes * 2 + positive_nodes * 2
 
-dimension_index = {1: 0, 2: 1, 6: 2}
+dimension_index = {1: 0, 2: 1}
 
 labels = []
 for node_id in [x for x in node_ids if x < 0]:
     for node_dim in [1, 2]:
         labels.append("%d(%d)" % (node_id, node_dim))
 for node_id in [x for x in node_ids if x > 0]:
-    for node_dim in [1, 2, 6]:
+    for node_dim in [1, 2]:
         labels.append("%d(%d)" % (node_id, node_dim))
 
 fig, ax = plt.subplots()
