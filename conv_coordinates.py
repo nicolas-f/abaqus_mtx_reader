@@ -2,7 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
-my_data = np.genfromtxt("job-poutre_MASS2.mtx", delimiter=',')
+my_data = np.genfromtxt("VV_MASS2.mtx", delimiter=',')
+
+my_data = my_data[np.logical_not(np.logical_or(my_data[:, 1] == 6, my_data[:, 3] == 6)), :]
 
 x_values = my_data[:, 0].astype(np.int32)
 x_deg_values = my_data[:, 1].astype(np.int32)
@@ -49,16 +51,16 @@ for x, deg_x, y, deg_y, node_value in zip(x_values, x_deg_values, y_values, y_de
     mat[j, i] = node_value
     mat[i, j] = node_value
     print("%d %d %.2g" % (j, i, node_value))
-    ax.text(i, j, "%.2g" % node_value, va='center', ha='center')
-    ax.text(j, i, "%.2g" % node_value, va='center', ha='center')
+    #ax.text(i, j, "%.2g" % node_value, va='center', ha='center')
+    #ax.text(j, i, "%.2g" % node_value, va='center', ha='center')
 
 
 
 cax = ax.matshow(mat, cmap=plt.cm.Blues, vmin=0, vmax=node_values.max())
 fig.colorbar(cax)
 
-ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
-ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+#ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+#ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
 ax.set_xticklabels([""] + labels)
 ax.set_yticklabels([""] + labels)
 
