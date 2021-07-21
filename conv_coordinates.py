@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+from scipy.sparse import dia_matrix
+
 
 my_data = np.genfromtxt("VV_MASS2.mtx", delimiter=',')
 
@@ -50,7 +52,6 @@ for x, deg_x, y, deg_y, node_value in zip(x_values, x_deg_values, y_values, y_de
     i = node_index[y] + dimension_index[deg_y]
     mat[j, i] = node_value
     mat[i, j] = node_value
-    print("%d %d %.2g" % (j, i, node_value))
     #ax.text(i, j, "%.2g" % node_value, va='center', ha='center')
     #ax.text(j, i, "%.2g" % node_value, va='center', ha='center')
 
@@ -66,3 +67,16 @@ ax.set_yticklabels([""] + labels)
 
 
 plt.show()
+
+#ret = #dia_matrix(tuple(a*31 for a in mat.shape), dtype=np.float32)
+ret = np.zeros(tuple(a*31 for a in mat.shape), dtype=np.float32)
+
+for loc in range(31):
+    from_col = loc*mat.shape[0]
+    to_col = loc*mat.shape[0] + mat.shape[0]
+    from_row = loc*mat.shape[1]
+    to_row = loc*mat.shape[1] + mat.shape[1]
+    ret[from_col:to_col, from_row:to_row] = mat
+
+np.set_printoptions(precision=3)
+print(ret.shape)
